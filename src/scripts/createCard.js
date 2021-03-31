@@ -1,11 +1,10 @@
 import { debounce } from "lodash";
 
-import fetchCountry from "./fetchCountry.js";
-
 import cardCountry from "../templates/countryCards.hbs";
 import listCountries from "../templates/listCountries.hbs";
 
 import refs from "./refsElDOM.js";
+import fetchCountry from "./fetchCountry.js";
 
 import '@pnotify/core/dist/BrightTheme.css';
 const { error } = require('@pnotify/core');
@@ -14,7 +13,7 @@ refs.input.addEventListener("input", debounce(onSearch, 500))
 
 function onSearch(e) {
     e.preventDefault();
-    
+
     const searchCountry = e.target.value;
     
     if (!this.value) {
@@ -30,9 +29,12 @@ function onSearch(e) {
                 refs.card.innerHTML = listCountries(result);
             } else {
                 error({
-                text: "Слишком много вариантов стран!!!!"
+                    text: "Слишком много вариантов стран!!!!",
+                    deploy: 700,
+                    addClass: "error-box",
+                    hide: true
           })
             }
         })
-        .catch(error => error)
+        .catch(error => console.log("Ошыбка"))
 }
